@@ -1,12 +1,32 @@
 import Spline from '@splinetool/react-spline'
 
 function Hero() {
-  const discordUrl = 'https://discord.com/invite/your-link'
+  const discordUrl = 'https://discord.gg/Hz3KCKusWz'
+
+  const isWelcomeKey = (rawName = '') => {
+    const name = String(rawName).toLowerCase()
+
+    // Accept common naming patterns: "key_w", "Key-W", "W", "Enter", etc.
+    const cleaned = name.replace(/[^a-z]/g, '') // keep letters only
+
+    // Single-letter keys for WELCOME
+    const welcomeLetters = new Set(['w', 'e', 'l', 'c', 'o', 'm'])
+
+    if (cleaned === 'enter' || name.includes('enter')) return true
+    if (welcomeLetters.has(cleaned)) return true
+
+    // Handle patterns like key_w, keyw, key-w
+    const parts = name.split(/[^a-z]+/g).filter(Boolean)
+    if (parts.includes('enter')) return true
+    if (parts.some((p) => welcomeLetters.has(p))) return true
+
+    return false
+  }
 
   const handleMouseDown = (e) => {
     try {
-      const name = e?.target?.name?.toLowerCase?.() || ''
-      if (name.includes('key') || name.includes('keyboard') || name.includes('button')) {
+      const targetName = e?.target?.name
+      if (isWelcomeKey(targetName)) {
         window.open(discordUrl, '_blank', 'noopener,noreferrer')
       }
     } catch (_) {
