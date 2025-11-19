@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Menu, X, DiscordLogoIcon } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 function Navbar() {
   const [open, setOpen] = useState(false)
